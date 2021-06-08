@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var app = express();
 
 // Cargar archivos de ruta
+var user_routes = require('./routes/user');
 
 // Middlewares
 app.use(bodyParser.urlencoded({extended:false}));
@@ -16,22 +17,7 @@ app.use(bodyParser.json());
 // CORS
 
 // Reescribir rutas
-
-// Ruta/metodo de prueba
-app.get('/prueba', (req, res) => {
-    return res.status(200).send("<h1>Hola mundo desde el back-end</h1>");
-    // return res.status(200).send({
-    //   name:'Javier',
-    //   message:'Hola mundo desde el back-end with node'
-    // });
-});
-
-app.post('/prueba', (req, res) => {
-    return res.status(200).send({
-      name:'Javier',
-      message:'Hola mundo desde el back-end with node, metodo POST'
-    });
-});
+app.use('/api', user_routes);
 
 // Exportar modulo
 module.exports = app;
