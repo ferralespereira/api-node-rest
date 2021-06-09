@@ -5,7 +5,11 @@ var UserController = require('../controllers/user');
 
 var router = express.Router();
 
+// Rutas de Prueba
 router.get('/probando', UserController.probando);
 router.post('/testeando', UserController.testeando);
+
+// Rutas de usuario
+router.post('/register', UserController.save);
 
 module.exports = router;
