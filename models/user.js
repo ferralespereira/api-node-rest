@@ -12,4 +12,4 @@ var UserSchema = Schema({
     role: String
 });
 
-module.export = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);
