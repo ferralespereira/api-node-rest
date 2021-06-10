@@ -3,6 +3,7 @@
 var validator = require('validator');
 var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/user');
+var jwt = require('../services/jwt');
 
 var controller = {
 
@@ -50,7 +51,7 @@ var controller = {
           }
 
           if(!issetUser){
-            // Si no existe
+            // Si el usuario no existe
 
             // cifrar la contrasena
             bcrypt.hash(params.password, null, null, (err, hash) => {
@@ -91,6 +92,67 @@ var controller = {
         message: "La validacion es incorrecta, intentelo de nuevo"
       });
     }
+  },
+
+  login: function(req, res){
+    // recoger los parametros de la peticion
+    var params = req.body;
+
+    // validar los datos
+    var validate_email = !validator.isEmpty(params.email) && validator.isEmail(params.email);
+    var validate_password = !validator.isEmpty(params.password);
+
+    if(!validate_email || !validate_password){
+      // devolver los datos
+      return res.status(200).send({
+        message: "Los datos son incorrectos, intentelo de nuevo"
+      });
+    }
+    // buscar usuario q coincidan con el email
+    User.findOne({email: params.email.toLowerCase()}, (err, user) => {
+      if(err){
+        // devolver los datos
+        return res.status(500).send({
+          message: "Error al intentar identificarse"
+        });
+      }
+
+      if(!user){
+        // devolver los datos
+        return res.status(404).send({
+          message: "El usuario no existe"
+        });
+      }
+      // si lo encuentra,
+      // comprobar la contrasena (coincidencia de email y password/bcrypt)
+      bcrypt.compare(params.password, user.password, (err, check) => {
+        // si es correcto,
+        if(check){
+            // generar token de jwt y devolverlo
+            if(params.gettoken){
+              // devolver los datos
+              return res.status(200).send({
+                token: jwt.createToken(user)
+              });
+            }else{
+              // limpiar el objeto
+              user.password = undefined;
+
+              // devolver los datos
+              return res.status(200).send({
+                message: "success",
+                user
+              });
+            }
+        }else{
+            // devolver los datos
+            return res.status(200).send({
+              message: "Las credenciales no son correctas"
+            });
+        }
+      });
+    });
+
   }
 
 };
