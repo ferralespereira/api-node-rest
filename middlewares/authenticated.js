@@ -27,7 +27,7 @@ exports.authenticated = function(req, res, next){
         });
       }
 
-    }catch(ex){
+    }catch(err){
       return res.status(404).send({
           message: 'El token no es valido'
       });

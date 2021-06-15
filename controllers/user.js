@@ -24,11 +24,17 @@ var controller = {
     var params = req.body;
 
     // Validar los datos
-    var validate_name = !validator.isEmpty(params.name);
-    var validate_surname = !validator.isEmpty(params.surname);
-    var validate_email = !validator.isEmpty(params.email) && validator.isEmail(params.email);
-    var validate_password = !validator.isEmpty(params.password);
-
+    try{
+      var validate_name = !validator.isEmpty(params.name);
+      var validate_surname = !validator.isEmpty(params.surname);
+      var validate_email = !validator.isEmpty(params.email) && validator.isEmail(params.email);
+      var validate_password = !validator.isEmpty(params.password);
+    }catch(err){
+      // devolver una respuesta
+      return res.status(200).send({
+        message: "Faltan datos por enviar"
+      });
+    }
     // console.log(validate_name, validate_surname, validate_email, validate_password);
     if(validate_name && validate_surname && validate_email && validate_password){
       // Cear el objeto de usuario
@@ -99,8 +105,15 @@ var controller = {
     var params = req.body;
 
     // validar los datos
+  try{
     var validate_email = !validator.isEmpty(params.email) && validator.isEmail(params.email);
     var validate_password = !validator.isEmpty(params.password);
+  }catch(err){
+    // devolver una respuesta
+    return res.status(200).send({
+      message: "Faltan datos por enviar"
+    });
+  }
 
     if(!validate_email || !validate_password){
       // devolver los datos
@@ -155,13 +168,54 @@ var controller = {
   },
 
   update: function(req, res){
-    // crear middleware para comprobar el jwt token
-    
 
-    // devolver los datos
-    return res.status(200).send({
-      message: "Metodo Update"
+    // recoger los datos del usuario
+    var params = req.body;
+
+    // Validar los datos
+    try{
+      var validate_name = !validator.isEmpty(params.name);
+      var validate_surname = !validator.isEmpty(params.surname);
+      var validate_email = !validator.isEmpty(params.email) && validator.isEmail(params.email);
+      }catch(err){
+        // devolver una respuesta
+        return res.status(200).send({
+          message: "Faltan datos por enviar"
+        });
+    }
+
+    // eliminar propiedades innecesarias
+    delete params.password;
+
+    var userId = req.user.sub;
+
+    // buscar y actualizar documentos
+    User.findOneAndUpdate({_id: userId}, params, {new: true}, (err, userUpdated) => {
+
+      if(err){
+        // devolver una respuesta
+        return res.status(500).send({
+          status: 'error',
+          message: 'error al actualizar usuario'
+        });
+      }
+
+      if(!userUpdated){
+        // devolver una respuesta
+        return res.status(500).send({
+          status: 'error',
+          message: 'userUpdated error'
+        });
+      }
+
+
+      // devolver una respuesta
+      return res.status(200).send({
+        status: 'success',
+        user: userUpdated
+      });
     });
+
   }
 
 };
