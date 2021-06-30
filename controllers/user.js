@@ -167,30 +167,74 @@ var controller = {
     });
   },
 
+  // update: function(req, res){
   update: function(req, res){
 
     // recoger los datos del usuario
     var params = req.body;
 
-    // Validar los datos
+    // le hago trim a los datos
     try{
-      var validate_name = !validator.isEmpty(params.name);
-      var validate_surname = !validator.isEmpty(params.surname);
-      var validate_email = !validator.isEmpty(params.email) && validator.isEmail(params.email);
-      }catch(err){
+        params.name = (params.name).trim();
+        params.surname = (params.surname).trim();
+        params.email = (params.email).trim();
+    }catch(err){
         // devolver una respuesta
-        return res.status(200).send({
-          message: "Faltan datos por enviar"
+        return res.status(404).send({
+          message: 'Faltan datos por enviar'
         });
     }
 
-    // eliminar propiedades innecesarias
-    delete params.password;
+    // convierto en minuscula el email
+    params.email = params.email.toLowerCase();
+
+    // Validar los datos
+    var validate_name = !validator.isEmpty(params.name) && validator.isAlpha(params.name);
+    var validate_surname = !validator.isEmpty(params.surname) && validator.isAlpha(params.surname);
+    var validate_email = !validator.isEmpty(params.email) && validator.isEmail(params.email);
+
+    // si la validacion es correcta
+    if(validate_name && validate_surname && validate_email){
+
+      // si voy a cambiar el email verico que no exista uno igual
+      if(req.user.email != params.email){
+
+        User.findOne({email: params.email}, function(err, user_found) {
+          // si de algun error
+          if (err) {
+              return res.status(200).send({
+                message: 'Error al buscar usuario'
+              });
+          }
+          // si existe un usuario con este correo abandono
+          if (user_found){
+            return res.status(404).send({
+              message: 'No se puede actualizar los datos de este usuario porque este correo ya existe.'
+            });
+          }else{
+            // edito usuario
+            controller.editUser(req, res, params);
+          }
+        });
+      }else{
+        // edito usuario
+        controller.editUser(req, res, params);
+      }
+
+    }else{
+      return res.status(200).send({
+        message: 'Validacion Incorrecta'
+      });
+    }
+  },
+
+  // guardo los nuevos datos
+  editUser: function(req, res, params){
 
     var userId = req.user.sub;
 
     // buscar y actualizar documentos
-    User.findOneAndUpdate({_id: userId}, params, {new: true}, (err, userUpdated) => {
+    User.findOneAndUpdate({_id: userId}, params, {new: true}, (err, user_Updated) => {
 
       if(err){
         // devolver una respuesta
@@ -200,7 +244,7 @@ var controller = {
         });
       }
 
-      if(!userUpdated){
+      if(!user_Updated){
         // devolver una respuesta
         return res.status(500).send({
           status: 'error',
@@ -208,16 +252,14 @@ var controller = {
         });
       }
 
-
-      // devolver una respuesta
+      // entrego el token con los nuevos datos
       return res.status(200).send({
         status: 'success',
-        user: userUpdated
+        message: 'User updated.',
+        new_token: jwt.createToken(user_Updated)
       });
-    });
-
-  }
-
+  });
+}
 };
 
 module.exports = controller;
