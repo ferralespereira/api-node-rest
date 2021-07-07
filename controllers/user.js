@@ -281,7 +281,7 @@ var controller = {
       var file_path = req.files.file0.path;
       var file_split = file_path.split('/');
 
-      file_name = file_split[2].split('.')[0];
+      file_name = file_split[2];
       var file_extension = file_split[2].split('.')[1];
 
       // comprobar la extension de la imagen, si no es una imagen borro el archivo subido
@@ -327,7 +327,7 @@ var controller = {
     var file_name = req.params.file_name;
     var path_file = './uploads/users/'+file_name;
 
-    if.exists(path_file, (exists) => {
+    fs.exists(path_file, (exists) => {
       if(exists){
         return res.sendFile(path.resolve(path_file));
       }else {
