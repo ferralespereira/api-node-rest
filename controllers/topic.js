@@ -114,7 +114,40 @@ var controller = {
         limit: topics.limit
       });
     });
+  },
 
+  getTopicsByUser: function(req, res){
+
+    // conseguir el id del usuario
+    var user_id = req.params.user;
+
+    // find los topics de el usuario q se me envia en la peticion
+    Topic.find({
+      user: user_id
+    })
+    .sort([['date', 'descending']])
+    .exec((err, topics) => {
+      if(err){
+        // devolver resultado
+        return res.status(200).send({
+          status: 'error',
+          message: 'Error buscado topics.'
+        });
+      }
+
+      if(!topics){
+        return res.status(200).send({
+          status: 'error',
+          message: 'No se encontraron topics.'
+        });
+      }
+
+      return res.status(200).send({
+        status: 'success',
+        message: 'Los topics de este usuario.',
+        topics
+      });
+    });
   }
 
 };
