@@ -36,6 +36,7 @@ var controller = {
       topic.content = params.content;
       topic.code = params.code;
       topic.lang = params.lang;
+      topic.user = req.user.sub;
 
       // y guardar topic
       topic.save((err, topic_stored) => {
@@ -64,8 +65,58 @@ var controller = {
         message: 'Validation error.'
       });
     }
+  },
+
+  getTopic: function(req, res){
+
+    // cargar la libreria de paginacion en la clase (modelo)
+
+    // indicar las opciones de paginacion
+    var page = parseInt(req.params.page);
+
+    if (!page){
+      page = 1;
+    }
+
+    // indicar las opciones de paginacion
+    var options = {
+      sort: { date: -1 },
+      populate: 'user',
+      limit: 5,
+      page: page
+    };
+
+    // find paginado
+    Topic.paginate({}, options, (err, topics) =>{
+
+      if(err){
+        // devolver resultado (topis, total de topic)
+        return res.status(500).send({
+          status: 'error',
+          message: 'Error al hacer la consulta.',
+          err
+        });
+      }
+
+      if (!topics){
+        return res.status(200).send({
+          status: 'notFound',
+          message: 'No hay topics.'
+        });
+      }
+
+      // devolver resultado (topis, total de topic, total de paginas)
+      return res.status(200).send({
+        status: 'success',
+        topics: topics.docs,
+        totalDocs: topics.totalDocs,
+        totalPages: topics.totalPages,
+        limit: topics.limit
+      });
+    });
 
   }
+
 };
 
 module.exports = controller;
