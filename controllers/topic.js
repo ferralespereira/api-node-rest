@@ -67,7 +67,7 @@ var controller = {
     }
   },
 
-  getTopic: function(req, res){
+  getTopics: function(req, res){
 
     // cargar la libreria de paginacion en la clase (modelo)
 
@@ -147,6 +147,44 @@ var controller = {
         message: 'Los topics de este usuario.',
         topics
       });
+    });
+  },
+
+  getTopic: function(req, res){
+    // sacar el id del topic por la url
+    var topic_id = req.params.id;
+
+    // Find topic by id
+    Topic.findById(topic_id)
+         .populate('user')
+         .exec((err, topic) => {
+
+           if(err){
+             return res.status(500).send({
+               status: 'error',
+               message: 'No hay topic.'
+             });
+           }
+
+           if(!topic){
+             return res.status(404).send({
+               status: 'error',
+               message: 'Error buscado topic.'
+             });
+           }
+
+           return res.status(200).send({
+             status: 'success',
+             message: 'Soy el getTopic',
+             topic
+           });
+         });
+  },
+
+  update: function(req, res){
+    return res.status(500).send({
+      status: 'error',
+      message: 'No hay topic.'
     });
   }
 

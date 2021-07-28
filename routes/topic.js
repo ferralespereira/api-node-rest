@@ -9,7 +9,9 @@ var md_auth = require('../middlewares/authenticated');
 // Rutas de Prueba
 router.get('/test', TopicController.test);
 router.post('/topic', md_auth.authenticated, TopicController.save);
-router.get('/topics/:page?', TopicController.getTopic);
+router.get('/topics/:page?', TopicController.getTopics);
 router.get('/user-topics/:user?', TopicController.getTopicsByUser);
+router.get('/topic/:id', TopicController.getTopic);
+router.put('/topic/:id', md_auth.authenticated, TopicController.update);
 
 module.exports = router;
