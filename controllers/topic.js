@@ -182,10 +182,66 @@ var controller = {
   },
 
   update: function(req, res){
-    return res.status(500).send({
-      status: 'error',
-      message: 'No hay topic.'
-    });
+    // recoger el id del topic en la url
+    var topic_id = req.params.id;
+
+    // recoger los datos q llegan desde post
+    var params = req.body;
+
+    // validar los datos
+    try{
+      var validate_title = !validator.isEmpty(params.title);
+      var validate_content = !validator.isEmpty(params.content);
+      var validate_lang = !validator.isEmpty(params.lang);
+    }catch(err){
+      // devolver una respuesta
+      return res.status(200).send({
+        message: "Faltan datos por enviar"
+      });
+    }
+
+    if(validate_title && validate_content && validate_lang){
+      // mostrar un json con los datos modificables
+      var update = {
+        title: params.title,
+        content: params.content,
+        code: params.code,
+        lang: params.lang
+      };
+
+      // find and update del topic por id y por el id de usuario
+      Topic.findOneAndUpdate({_id: topic_id, user: req.user.sub}, update, {new: true}, (err, topic_updated) => {
+
+        if(err){
+          // devolver una respuesta
+          return res.status(500).send({
+            status: "error",
+            message: "error en la peticion"
+          });
+        }
+
+        if(!topic_updated){
+          // devolver una respuesta
+          return res.status(404).send({
+            status: "error",
+            message: "No se ha actualizado el tema"
+          });
+        }
+
+        // devolver una respuesta
+        return res.status(200).send({
+          status: "success",
+          topic: topic_updated
+        });
+      });
+
+    }else{
+      // devolver una respuesta
+      return res.status(400).send({
+        status: "error",
+        message: "La validacion de los datos no es corrcta"
+      });
+    }
   }
 
 };
