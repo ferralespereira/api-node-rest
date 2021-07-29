@@ -242,6 +242,38 @@ var controller = {
         message: "La validacion de los datos no es corrcta"
       });
     }
+  },
+
+  delete: function(req, res){
+    // sacar el id del topic de la url
+    var topic_id = req.params.id;
+
+    // find and delete por topic_id y user_id
+    Topic.findOneAndDelete({_id: topic_id, user: req.user.sub}, (err, topic_removed) => {
+
+      if(err){
+        // devolver una respuesta
+        return res.status(500).send({
+          status: "error",
+          message: "error en la peticion"
+        });
+      }
+
+      if(!topic_removed){
+        // devolver una respuesta
+        return res.status(404).send({
+          status: "error",
+          message: "No se ha eliminado el tema"
+        });
+      }
+
+      // devolver respuesta
+      return res.status(200).send({
+        message: 'Metodo de borrado de temas',
+        topic_removed: topic_removed
+      });
+    });
+
   }
 
 };
