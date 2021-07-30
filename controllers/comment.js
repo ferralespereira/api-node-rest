@@ -79,17 +79,119 @@ var controller = {
   },
 
   update: function(req, res){
-    return res.status(200).send({
-      message: 'Metodo de update comentario'
-    });
+    // conseguir el id de comentario que llega por la url
+    var comment_id = req.params.comment_id;
+    console.log(comment_id);
+
+    // recoger los datos
+    var params = req.body;
+
+    // validar
+    try{
+      var validate_content = !validator.isEmpty(params.content);
+    }catch(err){
+      // devolver una respuesta
+      return res.status(200).send({
+        message: 'error en validacion'
+      });
+    }
+
+    if(validate_content){
+
+      // find and update documentos
+      Topic.findOneAndUpdate(
+        { "comments._id": comment_id },
+        {
+          "$set":{
+            "comments.$.content": params.content
+          }
+        },
+        {new:true},
+        (err, topic_updated) => {
+
+          if(err){
+            // devolver una respuesta
+            return res.status(500).send({
+              status: "error",
+              message: "error en la peticion"
+            });
+          }
+
+          if(!topic_updated){
+            // devolver una respuesta
+            return res.status(404).send({
+              status: "error",
+              message: "No se ha actualizado comment"
+            });
+          }
+
+          return res.status(200).send({
+            status: 'success',
+            topic_updated: topic_updated
+          });
+        });
+
+    }
   },
 
   delete: function(req, res){
-    return res.status(200).send({
-      message: 'Metodo de delete comentario'
+    //  sacar el id del topic y del comentario a borrar
+    var topic_id = req.params.topic_id;
+    var comment_id = req.params.comment_id;
+
+    // buscar el topic
+    Topic.findById(topic_id, (err, topic) =>{
+      if(err){
+        // devolver una respuesta
+        return res.status(500).send({
+          status: "error",
+          message: "error en la peticion"
+        });
+      }
+
+      if(!topic){
+        // devolver una respuesta
+        return res.status(404).send({
+          status: "error",
+          message: "No se ha encontrado el topic"
+        });
+      }
+
+      // seleccionar el subdocumento
+      var comment = topic.comments.id(comment_id);
+
+      // borrar el comentario
+      if(comment){
+        comment.remove();
+
+        // guardar el topic
+        topic.save((err) => {
+
+          if(err){
+            return res.status(500).send({
+              status: "error",
+              message: "error en la peticion"
+            });
+          }
+
+          // devolver el resultado
+          return res.status(200).send({
+            status: 'success',
+            topic: topic
+          });
+
+        });
+
+      }else{
+        // devolver una respuesta
+        return res.status(404).send({
+          status: "error",
+          message: "No existe este comentario el este topic"
+        });
+      }
     });
   }
-
+  
 };
 
 module.exports = controller;

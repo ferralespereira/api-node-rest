@@ -274,7 +274,13 @@ var controller = {
       });
     });
 
-  }
+  },
+
+  search: function(req, res){
+    return res.status(200).send({
+      message: 'Accion de busqueda'
+  });
+ }
 
 };
 
