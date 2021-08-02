@@ -277,9 +277,41 @@ var controller = {
   },
 
   search: function(req, res){
-    return res.status(200).send({
-      message: 'Accion de busqueda'
-  });
+
+    // sacar el string a buscar de la url
+    var search_string = req.params.search;
+
+    // find or
+    Topic.find({ "$or":[
+        {"title": {"$regex": search_string, "$options": "i"}},
+        {"content": {"$regex": search_string, "$options": "i"}},
+        {"code": {"$regex": search_string, "$options": "i"}},
+        {"lang": {"$regex": search_string, "$options": "i"}}
+    ]})
+    .sort([['date', 'descending']])
+    .exec((err, topics) => {
+
+      if(err){
+        return res.status(500).send({
+          status: "error",
+          message: "error en la peticion"
+        });
+      }
+
+      if(!topics){
+        return res.status(404).send({
+          status: "error",
+          message: "No hay topics disponibles"
+        });
+      }
+
+      // devolver respuesta
+      return res.status(200).send({
+        status: 'success',
+        topics
+      });
+
+    });
  }
 
 };
