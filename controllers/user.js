@@ -155,7 +155,7 @@ var controller = {
 
               // devolver los datos
               return res.status(200).send({
-                message: "success",
+                // message: "success",
                 user
               });
             }
