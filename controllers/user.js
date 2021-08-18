@@ -257,8 +257,8 @@ var controller = {
       return res.status(200).send({
         status: 'success',
         message: 'User updated.',
-        user: user_Updated
-        // new_token: jwt.createToken(user_Updated)
+        user: user_Updated,
+        token: jwt.createToken(user_Updated)
       });
   });
 },
@@ -317,7 +317,8 @@ var controller = {
             // file_path: file_path,
             // file_name: file_name,
             // file_extension: file_extension,
-            user: userUpdated
+            user: userUpdated,
+            token: jwt.createToken(userUpdated)
           });
         });
 
