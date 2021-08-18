@@ -155,8 +155,8 @@ var controller = {
 
               // devolver los datos
               return res.status(200).send({
-                // message: "success",
-                user
+                message: "success",
+                user: user
               });
             }
         }else{
@@ -209,7 +209,7 @@ var controller = {
           }
           // si existe un usuario con este correo abandono
           if (user_found){
-            return res.status(404).send({
+            return res.status(200).send({
               message: 'No se puede actualizar los datos de este usuario porque este correo ya existe.'
             });
           }else{
@@ -257,7 +257,8 @@ var controller = {
       return res.status(200).send({
         status: 'success',
         message: 'User updated.',
-        new_token: jwt.createToken(user_Updated)
+        user: user_Updated
+        // new_token: jwt.createToken(user_Updated)
       });
   });
 },
@@ -285,7 +286,7 @@ var controller = {
       var file_extension = file_split[2].split('.')[1];
 
       // comprobar la extension de la imagen, si no es una imagen borro el archivo subido
-      if(file_extension != 'png' && file_extension != 'jpg' && file_extension != 'jpeg' && file_extension != 'gif'){
+      if(file_extension != 'png' && file_extension != 'jpg' && file_extension != 'JPG' && file_extension != 'jpeg' && file_extension != 'gif'){
         fs.unlink(file_path, (err) => {
           // devolver respuesta
           return res.status(200).send({
@@ -312,10 +313,11 @@ var controller = {
           // devolver respuesta
           return res.status(200).send({
             status: 'success',
-            message: 'Upload avatar.',
-            file_path: file_path,
-            file_name: file_name,
-            file_extension: file_extension
+            // message: 'Upload avatar.',
+            // file_path: file_path,
+            // file_name: file_name,
+            // file_extension: file_extension,
+            user: userUpdated
           });
         });
 
