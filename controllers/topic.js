@@ -157,6 +157,7 @@ var controller = {
     // Find topic by id
     Topic.findById(topic_id)
          .populate('user')
+         .populate('comments.user')
          .exec((err, topic) => {
 
            if(err){

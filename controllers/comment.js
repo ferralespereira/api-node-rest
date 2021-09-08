@@ -59,9 +59,31 @@ var controller = {
               });
             }
 
-            return res.status(200).send({
-              status: 'success',
-              topic: topic
+            // Find topic by id
+            Topic.findById(topic._id)
+                 .populate('user')
+                 .populate('comments.user')
+                 .exec((err, topic) => {
+
+                   if(err){
+                     return res.status(500).send({
+                       status: 'error',
+                       message: 'No hay topic.'
+                     });
+                   }
+
+                   if(!topic){
+                     return res.status(404).send({
+                       status: 'error',
+                       message: 'Error buscado topic.'
+                     });
+                   }
+
+                   return res.status(200).send({
+                     status: 'success',
+                     message: 'content added',
+                     topic
+                   });
             });
 
           });
@@ -191,7 +213,7 @@ var controller = {
       }
     });
   }
-  
+
 };
 
 module.exports = controller;
