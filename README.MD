@@ -4,7 +4,7 @@
 * npm start
 
 ## Mongo tips
-* to install mongo `sudo apt-get install mongodb`
+* to install mongo `sudo apt install mongodb`
 * para acceder a la consola de mongo `mongo`
 * para mostrar las bases de datos `show dbs`
 * para utilizar una base de datos especifica `use dataBaseName`
