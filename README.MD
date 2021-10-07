@@ -19,5 +19,6 @@ I am using the `pm2` package to keep running the proyect even when i leaved the 
 * Install pm2: `npm install pm2 -g`
 * Once it's installed, go to the project folder and start the project: `sudo pm2 start index.js`
 * To keep running the project once the instance was reboteed: `sudo pm2 startup`
-* To see what are the process that pm2 have working: `pm2 list`
+* To see what are the process that pm2 have working: `sudo pm2 list`
 * To see if el server is making some error or any report: `sudo pm2 logs`
+* To restart all proccess that are running in pm2: `sudo pm2 restart all`
