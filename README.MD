@@ -1,7 +1,8 @@
 # JFP NOTES
 
 ## To run proyect:
-* npm start
+* Clone the project with git: `git clone https://route-of-the-project` 
+* Install all dependences of the project: `npm start`
 
 ## Mongo tips
 * to install mongo `sudo apt install mongodb`
@@ -13,8 +14,9 @@
 * to remove document `db.table.remove({_id:ObjectId("5e88b02db3fbf26334ef610e")});`
 
 ## To run the proyect in production
-I am using the `forever` package to keep running the proyect even when i leaved the instance. For it we'll need:
-* Install "forever" package: `npm install -g forever`
-* Once it's installed, go to the proyect folder and start the proyect: `forever start index.js`
-* To see what proyect is forever running: `forever list`
-* To stop the proyect that is running: `forever stopall`
+I am using the `pm2` package to keep running the proyect even when i leaved the instance. For it we'll need:
+* Install nodemon to: `npm install -g nodemon`
+* Install pm2: `npm install pm2 -g`
+* Once it's installed, go to the project folder and start the project: `sudo pm2 start index.js`
+* To keep running the project once the instance was reboteed: `sudo pm2 startup`
+* To see what are the process that pm2 have working: `pm2 list`
