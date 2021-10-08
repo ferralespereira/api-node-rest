@@ -2,7 +2,8 @@
 
 ## To run proyect:
 * Clone the project with git: `git clone https://route-of-the-project` 
-* Install all dependences of the project: `npm start`
+* Install project dependences : `npm install`
+* Update dependences: `npm update`
 
 ## Mongo tips
 * to install mongo `sudo apt install mongodb`
