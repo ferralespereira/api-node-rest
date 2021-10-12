@@ -5,7 +5,7 @@
 * Install project dependences : `npm install`
 * Update dependences: `npm update`
 
-## Mongo tips
+## Install Mongo
 * to install mongo `sudo apt install mongodb`
 * para acceder a la consola de mongo `mongo`
 * para mostrar las bases de datos `show dbs`
@@ -14,7 +14,34 @@
 * para mostrar los valores de una tabla `myCursor = db.tableName.find( {} )`
 * to remove document `db.table.remove({_id:ObjectId("5e88b02db3fbf26334ef610e")});`
 
-## To run the proyect in production
+## To run the proyect within apache2:
+* eject: `sudo a2enmod rewrite`
+* Install Apache Passager Library: `apt-get install libapache2-mod-passenger`
+* Config the Apache2 *.confi file adding this code:
+```
+<VirtualHost *:80>
+    ServerName yourserver.com
+
+    # Tell Apache and Passenger where your app's code directory is
+    DocumentRoot /var/www/myapp/code/public
+    PassengerAppRoot /var/www/myapp/code
+
+    # Tell Passenger that your app is a Node.js app
+    PassengerAppType node
+    PassengerStartupFile index.js
+
+    # Relax Apache security settings
+    <Directory /var/www/myapp/code/public>
+      Allow from all
+      Options -MultiViews
+      # Uncomment this if you're on Apache >= 2.4:
+      #Require all granted
+    </Directory>
+</VirtualHost>
+```
+* restart apache: `sudo systemctl restart apache2`
+
+## To run the proyect in production whitout Apache2:
 I am using the `pm2` package to keep running the proyect even when i leaved the instance. For it we'll need:
 * (ojo, this step isn't verify) Install nodemon to: `npm install -g nodemon`
 * Install pm2: `npm install pm2 -g`
