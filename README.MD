@@ -3,11 +3,12 @@
 ## To run proyect you'll need 3 steps:
 ### First step (Clone the proyect):
 * Clone the project with git: `git clone https://route-of-the-project` 
-* Install project dependences : `npm install`
-* Update dependences: `npm update`
+* Install project dependences : `sudo apt install npm`
+* Update dependences: `sudo npm update`
 
 ### Second step (Install Mongo)
 * to install mongo `sudo apt install mongodb`
+* Some Mongodb tips:
 * para acceder a la consola de mongo `mongo`
 * para mostrar las bases de datos `show dbs`
 * para utilizar una base de datos especifica `use dataBaseName`
@@ -17,22 +18,22 @@
 
 ### Third step (Prepar apache):
 * eject: `sudo a2enmod rewrite`
-* Install Apache Passager Library: `apt-get install libapache2-mod-passenger`
+* Install Apache Passager Library: `sudo apt-get install libapache2-mod-passenger`
 * Config the Apache2 *.confi file adding this code:
 ```
 <VirtualHost *:80>
     ServerName yourserver.com
 
     # Tell Apache and Passenger where your app's code directory is
-    DocumentRoot /var/www/myapp/code/public
-    PassengerAppRoot /var/www/myapp/code
+    DocumentRoot /var/www/html/foro/api-node-rest
+    PassengerAppRoot /var/www/html/foro/api-node-rest
 
     # Tell Passenger that your app is a Node.js app
     PassengerAppType node
     PassengerStartupFile index.js
 
     # Relax Apache security settings
-    <Directory /var/www/myapp/code/public>
+    <Directory /var/www/html/foro/api-node-rest>
       Allow from all
       Options -MultiViews
       # Uncomment this if you're on Apache >= 2.4:
