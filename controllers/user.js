@@ -270,8 +270,9 @@ var controller = {
     var file_name = 'Avatar no subido...';
     // console.log(req.files);
 
+    console.log(req);
     // sino se ha enviado ningun archivo
-    if(!req.files.file0){
+    if(!req.file){
       // devolver respuesta
       return res.status(404).send({
         status: 'error',
@@ -279,7 +280,7 @@ var controller = {
       });
     }else{
       // conseguir el nombre y la extension del archivo
-      var file_path = req.files.file0.path;
+      var file_path = req.file.path;
       var file_split = file_path.split('/');
 
       file_name = file_split[2];
