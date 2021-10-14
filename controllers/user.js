@@ -268,9 +268,7 @@ var controller = {
 
     // recoger el fichero de la peticion
     var file_name = 'Avatar no subido...';
-    // console.log(req.files);
 
-    console.log(req);
     // sino se ha enviado ningun archivo
     if(!req.file){
       // devolver respuesta

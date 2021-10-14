@@ -7,8 +7,6 @@ var router = express.Router();
 var md_auth = require('../middlewares/authenticated');
 
 // para cargar ficheros
-// var multipart = require('connect-multiparty');
-// var md_upload = multipart({ uploadDir: './uploads/users' });
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
