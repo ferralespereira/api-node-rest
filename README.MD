@@ -5,6 +5,7 @@
 * Clone the project with git: `git clone https://route-of-the-project` 
 * Install project dependences : `sudo apt install npm`
 * Update dependences: `sudo npm update`
+* Give all permision to 'ulpload/users' folder: `sudo chmod a+rwx ulpload/users`
 
 ### Second step (Install Mongo)
 * to install mongo `sudo apt install mongodb`
