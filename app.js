@@ -29,7 +29,6 @@ app.use((req, res, next) => {
 
 
 // cargo el frontend 
-// app.use(express.static(path.join(__dirname, '../foro-angular/dist/foro-angular')));
 app.use('/', express.static('../foro-angular/dist/foro-angular', {redirect: false}));
 
 // rutas del api-rest (backend)
