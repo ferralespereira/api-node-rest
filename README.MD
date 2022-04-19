@@ -27,15 +27,15 @@
     ServerName yourserver.com
 
     # Tell Apache and Passenger where your app's code directory is
-    DocumentRoot /var/www/html/foro/api-node-rest
-    PassengerAppRoot /var/www/html/foro/api-node-rest
+    DocumentRoot /var/www/Route_of_your_project_folder
+    PassengerAppRoot /var/www/Route_of_your_project_folder
 
     # Tell Passenger that your app is a Node.js app
     PassengerAppType node
     PassengerStartupFile index.js
 
     # Relax Apache security settings
-    <Directory /var/www/html/foro/api-node-rest>
+    <Directory /var/www/Route_of_your_project_folder>
       Allow from all
       Options -MultiViews
       # Uncomment this if you're on Apache >= 2.4:
