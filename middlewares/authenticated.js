@@ -3,7 +3,7 @@
 var jwt = require('jwt-simple');
 var moment = require('moment');
 
-// adquiero el valor rute_of_frontend_folder del archivo .env
+// adquiero el valor secret_key del archivo .env
 require('dotenv').config();
 var secret = process.env.SECRET_KEY;
 
