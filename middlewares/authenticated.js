@@ -2,7 +2,10 @@
 
 var jwt = require('jwt-simple');
 var moment = require('moment');
-var secret = "clave-secreta-para-generar-token-4411313aasnbxa";
+
+// adquiero el valor rute_of_frontend_folder del archivo .env
+require('dotenv').config();
+var secret = process.env.SECRET_KEY;
 
 exports.authenticated = function(req, res, next){
 
