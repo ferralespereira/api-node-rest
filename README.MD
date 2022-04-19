@@ -1,4 +1,4 @@
-# JFP NOTES
+# This is a Api Rest developed in nodejs for a Forum.
 
 ## To run proyect you'll need 3 steps:
 ### First step (Clone the proyect):
@@ -6,6 +6,7 @@
 * Install project dependences : `sudo apt install npm`
 * Update dependences: `sudo npm update`
 * Give all permision to 'ulpload/users' folder: `sudo chmod a+rwx ulpload/users`
+* Build ".env" file like ".env.example" file. [To know more about this.](https://www.freecodecamp.org/news/how-to-use-node-environment-variables-with-a-dotenv-file-for-node-js-and-npm/)
 
 ### Second step (Install Mongo)
 * to install mongo `sudo apt install mongodb`
@@ -43,3 +44,7 @@
 </VirtualHost>
 ```
 * restart apache: `sudo systemctl restart apache2`
+
+
+## Some Tips:
+* To run de project in develop mode: `node index.js`
