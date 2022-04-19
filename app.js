@@ -27,9 +27,12 @@ app.use((req, res, next) => {
 });
 
 
+// adquiero el valor rute_of_frontend_folder del archivo .env
+require('dotenv').config();
+var rute_of_frontend_folder = process.env.ROUTE_OF_FRONTEND_FOLDER;
 
 // cargo el frontend 
-app.use('/', express.static('../foro-angular/dist/foro-angular', {redirect: false}));
+app.use('/', express.static(rute_of_frontend_folder, {redirect: false}));
 
 // rutas del api-rest (backend)
 app.use('/api', user_routes);
@@ -38,7 +41,7 @@ app.use('/api', comment_routes);
 
 // cuando sea cualquier otra ruta, devuelvo la ruta del index.html (del frontend)
 app.get('*', function(req, res, next){
-    return res.sendFile(path.resolve('../foro-angular/dist/foro-angular/index.html'));
+    return res.sendFile(path.resolve(rute_of_frontend_folder+'/index.html'));
 });
 
 // Exportar modulo

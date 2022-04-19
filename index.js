@@ -5,7 +5,6 @@ var app = require('./app');
 
 // adquiero el valor PORT del archivo .env
 require('dotenv').config();
-// var port = process.env.PORT || 3999;
 const port = process.env.PORT;
 
 // corrigiendo error de consola
