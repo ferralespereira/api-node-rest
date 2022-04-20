@@ -1,4 +1,4 @@
-# This is a Api Rest developed in nodejs for a Forum.
+# This is an Api Rest developed in nodejs for a Forum.
 
 ## To run proyect you'll need 3 steps:
 ### First step (Clone the proyect):
@@ -44,7 +44,6 @@
 </VirtualHost>
 ```
 * restart apache: `sudo systemctl restart apache2`
-
 
 ## Some Tips:
 * To run de project in develop mode: `node index.js`
