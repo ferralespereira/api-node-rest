@@ -1,13 +1,18 @@
-# This is an Api Rest developed in nodejs for a [Forum](https://foro.javierfolder.com/)
+# [Api-Node-Rest](https://foro.javierfolder.com/)
 
 <p align="center">
   <img src="https://github.com/ferralespereira/foro-angular/blob/master/src/assets/img/jforo1.svg" width="350" title="Foro Angular">
 </p>
 
 <p align="center">
-<strong> This is the Api Rest of the Frontend in https://github.com/ferralespereira/foro-angular</strong>
+<strong>This is an Api Rest developed in nodejs for a Forum.</strong>
+</p>
+<p align="center">
+This is the Api Rest of the Frontend in https://github.com/ferralespereira/foro-angular
 </p>
 <br>
+<br>
+
 
 ## To run proyect you'll need 3 steps:
 
