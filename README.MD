@@ -43,32 +43,32 @@ sudo apt install mongodb
 ```
 
 #### Some Mongodb tips:
-* para acceder a la consola de mongo:
+* To acces to the mongo console:
 ```bash
 mongo
 ```
 
-* para mostrar las bases de datos:
+* To show DataBase:
 ```bash
 show dbs
 ```
 
-* para utilizar una base de datos especifica:
+* To use an specific DataBase:
 ```bash
 use dataBaseName
 ```
 
-* para mostrar las tablas de la base de datos q estoy utilizando:
+* To show DataBase Tables:
 ```bash
 show tables
 ```
 
-* para mostrar los valores de una tabla:
+* To show Table Documents:
 ```bash
 myCursor = db.tableName.find( {} )
 ```
 
-* to remove document:
+* To remove Document:
 ```bash
 db.table.remove({_id:ObjectId("5e88b02db3fbf26334ef610e")});
 ```
