@@ -47,37 +47,6 @@ sudo chmod a+rwx ulpload/users
 sudo apt install mongodb
 ```
 
-#### Some Mongodb tips:
-* To acces to the mongo console:
-```bash
-mongo
-```
-
-* To show DataBase:
-```bash
-show dbs
-```
-
-* To use an specific DataBase:
-```bash
-use dataBaseName
-```
-
-* To show DataBase Tables:
-```bash
-show tables
-```
-
-* To show Table Documents:
-```bash
-myCursor = db.tableName.find( {} )
-```
-
-* To remove Document:
-```bash
-db.table.remove({_id:ObjectId("5e88b02db3fbf26334ef610e")});
-```
-
 ### Third step (Prepar apache):
 * eject:
 ```bash
